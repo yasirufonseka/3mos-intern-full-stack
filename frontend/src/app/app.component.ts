@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { InternListComponent } from "./component/intern-list/intern-list.component";
 
 @Component({
   selector: 'app-root',
