@@ -62,7 +62,7 @@ public  class UserService  {
     }
   }
 
-  public String updateUser(String id, UserDto updateUser) {
+  public UserModel updateUser(String id, UserDto updateUser) {
     try {
       Optional<UserModel> findUser = userRepo.findById(id);
       if (findUser.isPresent()) {
@@ -73,10 +73,10 @@ public  class UserService  {
         user.setRole(updateUser.getRole());
         user.setPassword(passwordEncoder.encode(updateUser.getPassword()));
 
-        userRepo.save(user);
-        return "Update Successful";
+       return userRepo.save(user);
+
       } else {
-        return String.valueOf(Optional.empty());
+        return null;
       }
 
     } catch (Exception e) {

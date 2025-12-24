@@ -1,152 +1,158 @@
-<div class="intern-list-container">
+<div class="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-6">
   <!-- Add Intern Modal -->
   <app-add-intern-modal
     [isOpen]="isModalOpen"
     (close)="closeModal()"
-    
   ></app-add-intern-modal>
 
-  <!-- Header Section -->
-  <div class="header-section">
-    <div class="header-content">
-      <div>
-        <h1 class="page-title">Intern Management</h1>
-        <p class="page-subtitle">Manage and track your internship program</p>
-      </div>
-      <div class="header-actions">
-        <button class="btn-add-new" (click)="openModal()">
-          <i class="fas fa-plus"></i> Add New Intern
-        </button>
-        <button class="btn-profile" 
-        title="Profile" 
-        [routerLink]="['/profile']"
-        >
-          <i class="fas fa-user-circle"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!--Search and Filters -->
-   <div class="filters-section">
-    <div class="filters-grid">
-      <div class="search-box-wrapper">
-        <div class="search-box">
-          <i class="fas fa-search search-icon"></i>
-          <input
-            type="text"
-            class="search-input"
-            placeholder="Search by name, email..."
-            [(ngModel)]="searchTerm"
-            (input)="onSearch()"
+  <div class="max-w-7xl mx-auto">
+    <!-- Header Section -->
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+      <div class="flex justify-between items-start md:items-center gap-6">
+        <div>
+          <h1 class="text-4xl font-bold text-gray-900 mb-2">Intern Management</h1>
+          <p class="text-gray-600">Manage and track your internship program</p>
+        </div>
+        <div class="flex gap-4">
+          <button 
+            (click)="openModal()"
+            class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors duration-200"
           >
+            <i class="fas fa-plus"></i> Add New Intern
+          </button>
+          <button 
+            class="btn-profile"
+            title="Profile" 
+            [routerLink]="['/profile']"
+          >
+          <svg  xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#e3e3e3"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg>
+          </button>
         </div>
       </div>
-      
-      <div class="filter-wrapper">
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="relative">
+          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="onSearch()"
+            placeholder="Search by name, email..."
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          >
+        </div>
+        
         <select
-          class="filter-select"
           [(ngModel)]="selectedDepartment"
           (change)="onFilter()"
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none cursor-pointer"
         >
-          <option value="" selected disabled>All Departments</option>
+          <option value="" disabled>All Departments</option>
           <option *ngFor="let dept of departments" [value]="dept">
             {{ dept }}
           </option>
         </select>
-      </div> 
-      
-       <div class="filter-wrapper">
+        
         <select
-          class="filter-select"
           [(ngModel)]="selectedStatus"
           (change)="onFilter()"
+          class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none cursor-pointer"
         >
-          <option value="" selected disabled>All Status</option>
+          <option value="" disabled>All Status</option>
           <option *ngFor="let status of statuses" [value]="status">
             {{ status | titlecase }}
           </option>
         </select>
-      </div>
-      
-      <div class="filter-wrapper">
-        <button class="btn-clear" (click)="clearFilters()">
-          <i class="fas fa-redo"></i> Reset Filters
+        
+        <button 
+          (click)="clearFilters()"
+          class="flex items-center justify-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+        >
+          <i class="fas fa-redo"></i> Reset
         </button>
       </div>
     </div>
-  </div>
 
-  <!-- Loading State -->
-  <div *ngIf="loading" class="loading-container">
-    <div class="spinner"></div>
-    <p class="loading-text">Loading interns...</p>
-  </div>
-
-  <!-- Interns Table -->
-  <div *ngIf="!loading" class="table-section">
-    <div *ngIf="!loading" class="table-wrapper">
-      <table class="interns-table" >
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Department</th>
-            <th>Status</th>
-            <th>University</th>
-            <th>Mentor</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let intern of filteredInterns | paginate:{ itemsPerPage: itemsPerPage, currentPage: pageNo }" class="table-row">
-            <td class="name-cell">
-              <span class="name-text">{{ intern.name }}</span>
-            </td>
-            <td class="email-cell">{{ intern.email }}</td>
-            <td class="department-cell">
-              <span class="badge-department">{{ intern.department }}</span>
-            </td>
-            <td class="status-cell">
-              <!-- <span 
-                class="badge-status"
-                [ngClass]="getStatusBadgeClass(intern.status)"
-              > -->
-                {{ intern.status | titlecase }}
-              <!-- </span> -->
-            </td>
-            <td class="university-cell">{{ intern.university }}</td>
-            <td class="mentor-cell">{{ intern.mentor }}</td>
-            <td class="date-cell">{{ intern.startDate | date: 'MMM d, y' }}</td>
-            <td class="date-cell">{{ intern.endDate | date: 'MMM d, y' }}</td>
-            <td class="action-cell">
-              <button 
-                class="btn-edit"
-                (click)="onEditIntern(intern)"
-                title="Edit Intern"
-              >
-                Edit
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex flex-col items-center justify-center bg-white rounded-lg shadow-md p-12">
+      <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600 mb-4"></div>
+      <p class="text-gray-600 text-lg">Loading interns...</p>
     </div>
 
-    <!-- No Results -->
-    <ng-template #noResults>
-      <div class="no-results">
-        <div class="no-results-icon">
+    <!-- Interns Table -->
+    <div *ngIf="!loading" class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-100 border-b border-gray-200">
+            <tr>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Name</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Email</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Department</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Status</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">University</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Mentor</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Start Date</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">End Date</th>
+              <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr 
+              *ngFor="let intern of filteredInterns | paginate:{ itemsPerPage: itemsPerPage, currentPage: pageNo }"
+              class="hover:bg-gray-50 transition-colors duration-150"
+            >
+              <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ intern.name }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ intern.email }}</td>
+              <td class="px-6 py-4 text-sm">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                  {{ intern.department }}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ intern.status | titlecase }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ intern.university }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ intern.mentor }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ intern.startDate | date: 'MMM d, y' }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ intern.endDate | date: 'MMM d, y' }}</td>
+              <td class="px-6 py-4 text-sm">
+                <div class="flex gap-2">
+                <button 
+                  (click)="onEditIntern(intern)"
+                  title="Edit Intern"
+                  class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700  hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+                >
+                  Edit
+                </button>
+                <button 
+                  (click)="onDeleteIntern(intern)"
+                  title="Delete Intern"
+                  class="bg-gradient-to-r from-red-600 to-red-600 hover:from-red-700 hover:to-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+                >
+                  Delete
+                </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- No Results -->
+      <div *ngIf="filteredInterns.length === 0" class="text-center py-12">
+        <div class="text-4xl text-gray-300 mb-4">
           <i class="fas fa-search"></i>
         </div>
-        <h3>No interns found</h3>
-        <p>Try adjusting your search or filter criteria</p>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No interns found</h3>
+        <p class="text-gray-600">Try adjusting your search or filter criteria</p>
       </div>
-    </ng-template>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-8">
+      <pagination-controls (pageChange)="pageNo = $event" class="flex justify-center"></pagination-controls>
+    </div>
   </div>
-
-  <pagination-controls (pageChange)="pageNo = $event" class="pagination-controls"></pagination-controls>
-
+</div>
   

@@ -47,10 +47,10 @@ public class UserController {
   }
 
   @PutMapping("updateuser")
-  public ResponseEntity<String> updateIntern(@RequestParam String id ,@RequestBody UserDto updateUser){
+  public ResponseEntity<UserModel> updateIntern(@RequestParam String id ,@RequestBody UserDto updateUser){
     try{
-     String updateUsers = userService.updateUser(id,updateUser);
-      return ResponseEntity.status(200).body(updateUsers);
+     UserModel updateUsers = userService.updateUser(id,updateUser);
+      return ResponseEntity.ok(updateUsers);
 
     } catch (Exception e) {
       throw new RuntimeException(e);

@@ -1,6 +1,8 @@
 package com.example.internmanagent.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -54,10 +56,12 @@ public class InternController {
 }
 
 @DeleteMapping("deleteintern")
-  public ResponseEntity<String> deleteIntern (@RequestParam String id){
+  public ResponseEntity<Map<String,String>> deleteIntern (@RequestParam String id){
   try{
-    String deleteintern = internService.deleteIntern(id);
-  return ResponseEntity.status(200).body(deleteintern);
+    String deleteinterns =  internService.deleteIntern(id);
+    Map<String,String> responce = new HashMap<>();
+    responce.put("message",deleteinterns);
+  return ResponseEntity.status(200).body(responce);
   }  catch (Exception e) {
     throw new RuntimeException(e);
   }

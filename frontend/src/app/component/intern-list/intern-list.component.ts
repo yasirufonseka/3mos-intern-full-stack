@@ -48,6 +48,8 @@ export class InternListComponent implements OnInit {
     this.internService.onrefresh().subscribe(() => {
       this.loadInterns();
     })
+//show newly added intern in the list
+   
 
   }
 
@@ -55,7 +57,7 @@ export class InternListComponent implements OnInit {
     this.internService.getInterns().subscribe({
       next: (data) => {
         console.log('Interns fetched:', data);
-        this.interns = data || [];
+        this.interns = (data || []).reverse(); // Reverse to show newest first
         this.filteredInterns = data;
         this.loading = false;
         console.log('Interns loaded into component:', this.interns);
@@ -65,7 +67,6 @@ export class InternListComponent implements OnInit {
         this.loading = false;
       }
     });
-
   }
 
   onEditIntern(intern: Intern) {
@@ -75,6 +76,11 @@ export class InternListComponent implements OnInit {
     this.selectedIntern = intern;
     this.sendToChild();
 
+
+  }
+
+  onDeleteIntern(intern: Intern) {
+    this.internService.deleteIntern(intern.id!);
 
   }
 

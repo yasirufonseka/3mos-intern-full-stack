@@ -19,7 +19,7 @@ export class UserService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
-  getUsers() {
+  getUsers(id?: string) {
    return this.http.get(`${this.apiUrl}/getallusers`);
   }
 
@@ -37,17 +37,10 @@ export class UserService {
   }
 
   updateUser(id: string, userData: any) {
-    this.http.put(`${this.apiUrl}/updateuser?id=${id}`, userData).subscribe({
-      next: (data) => {
-        console.log('User updated successfully'); 
-        Swal.fire('Success', 'User updated successfully', 'success');
-      },
-      error: (error) => {
-        console.error('Failed to update user', error);
-        Swal.fire('Error', 'Failed to update user', 'error');
-      }
-    });
+   return this.http.put(`${this.apiUrl}/updateuser?id=${id}`, userData);
   }
+
+
   deleteUser(id: string) {
     this.http.delete(`${this.apiUrl}/deleteuser?id=${id}`).subscribe({
       next: (data) => {
@@ -59,6 +52,10 @@ export class UserService {
         Swal.fire('Error', 'Failed to delete user', 'error');
       }
     });
+  }
+
+  getUserById(id: string) {
+    return this.http.get(`${this.apiUrl}/byid?id=${id}`);
   }
 
 }

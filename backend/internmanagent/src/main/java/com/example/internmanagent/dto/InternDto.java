@@ -22,3 +22,5 @@ public class InternDto {
   private LocalDate startDate;
   private LocalDate endDate;
 }
+
+
