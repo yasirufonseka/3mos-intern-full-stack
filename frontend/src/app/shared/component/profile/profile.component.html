@@ -1,0 +1,83 @@
+<div class="profile-container">
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <img [src]="user.avatar" alt="User Avatar" class="avatar-img">
+    </div>
+    <div class="profile-info">
+      <h1 class="profile-name">{{ user.name }}</h1>
+      <p class="profile-role">{{ user.role }}</p>
+      <p class="profile-email">{{ user.email }}</p>
+    </div>
+    <div class="profile-actions">
+      <button *ngIf="!isEditMode" class="btn-edit" (click)="toggleEditMode()">
+        <i class="fas fa-edit"></i> Edit Profile
+      </button>
+      <button *ngIf="isEditMode" class="btn-save" (click)="saveProfile()">
+        <i class="fas fa-save"></i> Save
+      </button>
+      <button *ngIf="isEditMode" class="btn-cancel" (click)="cancelEdit()">
+        <i class="fas fa-times"></i> Cancel
+      </button>
+     
+      <button class="btn-logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- Profile Details -->
+  <div class="profile-details">
+    <div class="detail-section">
+      <h2>Personal Information</h2>
+      <div class="detail-group">
+        <label>Full Name</label>
+        <input 
+          *ngIf="isEditMode" 
+          type="text" 
+          class="input-field" 
+          [(ngModel)]="user.name"
+        >
+        <p *ngIf="!isEditMode" class="detail-value">{{ user.name }}</p>
+      </div>
+      <div class="detail-group">
+        <label>Email</label>
+        <input 
+          *ngIf="isEditMode" 
+          type="email" 
+          class="input-field" 
+          [(ngModel)]="user.email"
+        >
+        <p *ngIf="!isEditMode" class="detail-value">{{ user.email }}</p>
+      </div>
+      <div class="detail-group">
+        <label>Role</label>
+        <input 
+          *ngIf="isEditMode" 
+          type="text" 
+          class="input-field" 
+          [(ngModel)]="user.role"
+        >
+        <p *ngIf="!isEditMode" class="detail-value">{{ user.role }}</p>
+      </div>
+      <div class="detail-group">
+        <label>Department</label>
+        <input 
+          *ngIf="isEditMode" 
+          type="text" 
+          class="input-field" 
+          [(ngModel)]="user.department"
+        >
+        <p *ngIf="!isEditMode" class="detail-value">{{ user.department }}</p>
+      </div>
+      <div class="detail-group">
+        <label>Join Date</label>
+        <p class="detail-value">{{ user.joinDate | date: 'MMM d, y' }}</p>
+      </div>
+    </div>
+    <button class="btn-back flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-200 font-medium" [routerLink]="['/intern-list']">
+        <i class="fas fa-arrow-left"></i> Back to List
+      </button>
+  </div>
+   
+</div>

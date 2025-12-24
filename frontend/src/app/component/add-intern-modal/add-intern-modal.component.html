@@ -1,0 +1,145 @@
+<div class="modal-overlay" [class.active]="isOpen" (click)="onClose()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">Add New Intern</h2>
+      <button class="close-btn" (click)="onClose()" >
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form class="modal-body" [formGroup]="addintern" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input
+            id="name"
+            type="text"
+            class="form-input"
+            placeholder="Enter full name"
+            formControlName="name"
+            name="name"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input
+            id="email"
+            type="email"
+            class="form-input"
+            placeholder="Enter email address"
+            formControlName="email"
+            name="email"
+            required
+          >
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="department">Department *</label>
+          <select
+            id="department"
+            class="form-select"
+           formControlName="department"
+            name="department"
+            required
+          >
+            <option value="">Select Department</option>
+            <option *ngFor="let dept of departments" [value]="dept">
+              {{ dept }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status *</label>
+          <select
+            id="status"
+            class="form-select"
+            formControlName="status"
+            name="status"
+            required
+          >
+            <option *ngFor="let st of statuses" [value]="st">
+              {{ st | titlecase }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="university">University *</label>
+          <input
+            id="university"
+            type="text"
+            class="form-input"
+            placeholder="Enter university name"
+            formControlName="university"
+            name="university"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="mentor">Mentor Name *</label>
+          <input
+            id="mentor"
+            type="text"
+            class="form-input"
+            placeholder="Enter mentor name"
+            formControlName="mentor"
+            name="mentor"
+            required
+          >
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate">Start Date *</label>
+          <input
+            id="startDate"
+            type="date"
+            class="form-input"
+            formControlName="startDate"
+            name="startDate"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">End Date *</label>
+          <input
+            id="endDate"
+            type="date"
+            class="form-input"
+            formControlName="endDate"
+            name="endDate"
+            required
+          >
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-cancel" (click)="onClose()" [disabled]="isSubmitting">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]=" isSubmitting"
+        >
+          <span *ngIf="!isSubmitting">
+            <i class="fas fa-check"></i>{{isEditMode ? ' Update Intern' : ' Add Intern'}}
+          </span>
+          <span *ngIf="isSubmitting" class="submitting">
+            <i class="fas fa-spinner"></i> {{isEditMode ? ' Updating...' : ' Adding...'}}
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

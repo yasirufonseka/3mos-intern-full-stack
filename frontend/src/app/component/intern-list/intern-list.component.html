@@ -1,0 +1,152 @@
+<div class="intern-list-container">
+  <!-- Add Intern Modal -->
+  <app-add-intern-modal
+    [isOpen]="isModalOpen"
+    (close)="closeModal()"
+    
+  ></app-add-intern-modal>
+
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="header-content">
+      <div>
+        <h1 class="page-title">Intern Management</h1>
+        <p class="page-subtitle">Manage and track your internship program</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn-add-new" (click)="openModal()">
+          <i class="fas fa-plus"></i> Add New Intern
+        </button>
+        <button class="btn-profile" 
+        title="Profile" 
+        [routerLink]="['/profile']"
+        >
+          <i class="fas fa-user-circle"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--Search and Filters -->
+   <div class="filters-section">
+    <div class="filters-grid">
+      <div class="search-box-wrapper">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search by name, email..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearch()"
+          >
+        </div>
+      </div>
+      
+      <div class="filter-wrapper">
+        <select
+          class="filter-select"
+          [(ngModel)]="selectedDepartment"
+          (change)="onFilter()"
+        >
+          <option value="" selected disabled>All Departments</option>
+          <option *ngFor="let dept of departments" [value]="dept">
+            {{ dept }}
+          </option>
+        </select>
+      </div> 
+      
+       <div class="filter-wrapper">
+        <select
+          class="filter-select"
+          [(ngModel)]="selectedStatus"
+          (change)="onFilter()"
+        >
+          <option value="" selected disabled>All Status</option>
+          <option *ngFor="let status of statuses" [value]="status">
+            {{ status | titlecase }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="filter-wrapper">
+        <button class="btn-clear" (click)="clearFilters()">
+          <i class="fas fa-redo"></i> Reset Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading interns...</p>
+  </div>
+
+  <!-- Interns Table -->
+  <div *ngIf="!loading" class="table-section">
+    <div *ngIf="!loading" class="table-wrapper">
+      <table class="interns-table" >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>University</th>
+            <th>Mentor</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let intern of filteredInterns | paginate:{ itemsPerPage: itemsPerPage, currentPage: pageNo }" class="table-row">
+            <td class="name-cell">
+              <span class="name-text">{{ intern.name }}</span>
+            </td>
+            <td class="email-cell">{{ intern.email }}</td>
+            <td class="department-cell">
+              <span class="badge-department">{{ intern.department }}</span>
+            </td>
+            <td class="status-cell">
+              <!-- <span 
+                class="badge-status"
+                [ngClass]="getStatusBadgeClass(intern.status)"
+              > -->
+                {{ intern.status | titlecase }}
+              <!-- </span> -->
+            </td>
+            <td class="university-cell">{{ intern.university }}</td>
+            <td class="mentor-cell">{{ intern.mentor }}</td>
+            <td class="date-cell">{{ intern.startDate | date: 'MMM d, y' }}</td>
+            <td class="date-cell">{{ intern.endDate | date: 'MMM d, y' }}</td>
+            <td class="action-cell">
+              <button 
+                class="btn-edit"
+                (click)="onEditIntern(intern)"
+                title="Edit Intern"
+              >
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No Results -->
+    <ng-template #noResults>
+      <div class="no-results">
+        <div class="no-results-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3>No interns found</h3>
+        <p>Try adjusting your search or filter criteria</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <pagination-controls (pageChange)="pageNo = $event" class="pagination-controls"></pagination-controls>
+
+  
